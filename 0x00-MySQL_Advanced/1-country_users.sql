@@ -1,4 +1,4 @@
--- Write a SQL script that creates a table users following these requirements:
+-- Write a SQL script that creates a table `users` following these requirements:
 
 -- • With these attributes:
 --  ৹ `id`: integer, never null, auto increment and primary key
