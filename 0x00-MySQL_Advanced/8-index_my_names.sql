@@ -3,6 +3,6 @@
 
 -- Requirements:
 
--- Import this table dump: https://intranet.alxswe.com/rltoken/BluyCCIIfw0NqcjqUiUdEw
--- Only the first letter of `name` must be indexed
+-- • Import this table dump: https://intranet.alxswe.com/rltoken/BluyCCIIfw0NqcjqUiUdEw
+-- • Only the first letter of `name` must be indexed
 CREATE INDEX idx_name_first ON names(name(1));
