@@ -1,5 +1,12 @@
--- Creates a view need_meeting that lists all students that have a score
--- under 80 (strict) and no last_meeting or more than 1 month.
+-- Write a SQL script that creates a view `need_meeting` that lists
+-- all students that have a score under 80 (strict) and no
+-- `last_meeting` or more than 1 month.
+
+-- Requirements:
+
+-- • The view `need_meeting` should return all students name when:
+--  ৹ They score are under (strict) to 80
+--  ৹ AND no `last_meeting` date OR more than a month
 DROP VIEW IF EXISTS need_meeting;
 CREATE VIEW need_meeting AS
 SELECT name
