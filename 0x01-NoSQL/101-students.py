@@ -29,5 +29,6 @@ def top_students(mongo_collection):
         )
 
     students_list = [doc for doc in mongo_collection.find()]
-    sorted_students_list = sorted(students_list, key=lambda x: x["averageScore"], reverse=True)
+    sorted_students_list = sorted(
+        students_list, key=lambda x: x["averageScore"], reverse=True)
     return sorted_students_list

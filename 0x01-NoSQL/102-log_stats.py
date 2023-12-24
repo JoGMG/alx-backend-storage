@@ -26,7 +26,7 @@ def get_nginx_stats():
 
     status_check_count = nginx_collection.count_documents(
         {"method": "GET", "path": "/status"})
-    
+
     sorted_ips = nginx_collection.aggregate([
         {"$group": {"_id": "$ip", "count": {"$sum": 1}}},
         {"$sort": {"count": -1}},
@@ -45,6 +45,7 @@ def get_nginx_stats():
             break
         print("\t{}: {}".format(items.get('ip'), items.get('count')))
         _count += 1
+
 
 if __name__ == '__main__':
     get_nginx_stats()
