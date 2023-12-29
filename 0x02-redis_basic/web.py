@@ -52,4 +52,5 @@ def get_page(url: str) -> str:
     Argument:
         - `url`: The URL to fetch data from.
     """
-    return requests.get(url).text
+    response = requests.get(url)
+    return response.text
