@@ -16,14 +16,15 @@ def count_calls(method: Callable) -> Callable:
         - `method`: a callable method
     """
     @wraps(method)
-    def invoker(self, *args, **kwargs) -> Any:
+    def wrapper(self, *args, **kwargs) -> Any:
         """
-        Invokes the given method after incrementing its call counter.
+        Wrapper function that incrementes the call counter
+        of the method.
         """
         if isinstance(self._redis, redis.Redis):
             self._redis.incr(method.__qualname__)
         return method(self, *args, **kwargs)
-    return invoker
+    return wrapper
 
 
 def call_history(method: Callable) -> Callable:
@@ -34,9 +35,10 @@ def call_history(method: Callable) -> Callable:
         - `method`: a callable method
     """
     @wraps(method)
-    def invoker(self, *args, **kwargs) -> Any:
+    def wrapper(self, *args, **kwargs) -> Any:
         """
-        Returns method's output after storing its inputs and output.
+        Wrapper function that returns method's outputs
+        after storing its inputs and outputs.
         """
         in_key = '{}:inputs'.format(method.__qualname__)
         out_key = '{}:outputs'.format(method.__qualname__)
@@ -46,7 +48,7 @@ def call_history(method: Callable) -> Callable:
         if isinstance(self._redis, redis.Redis):
             self._redis.rpush(out_key, output)
         return output
-    return invoker
+    return wrapper
 
 
 def replay(method: Callable) -> None:
@@ -65,7 +67,7 @@ def replay(method: Callable) -> None:
     in_key = '{}:inputs'.format(method_name)
     out_key = '{}:outputs'.format(method_name)
     method_call_count = 0
-    if redis_store.exists(method_name) != 0:
+    if redis_store.exists(method_name):
         method_call_count = int(redis_store.get(method_name))
     print('{} was called {} times:'.format(method_name, method_call_count))
     method_inputs = redis_store.lrange(in_key, 0, -1)
